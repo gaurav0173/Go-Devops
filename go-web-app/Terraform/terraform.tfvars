@@ -1,3 +1,3 @@
-ami           = "ami-123456"
+ami           = "ami-0c55b159cbfafe1f0"
 instance_type = "t2.micro"
 name          = "my-ec2-instance"
