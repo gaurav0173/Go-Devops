@@ -1,8 +1,8 @@
-#ec2 module 
-module "ec2" {
-  source = "./modules/ec2"
+data "aws_ssm_parameter" "ami" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+}
 
-  ami           = var.ami
-  instance_type = var.instance_type
-  name          = var.name
+resource "aws_instance" "this" {
+  ami           = data.aws_ssm_parameter.ami.value
+  instance_type = "t2.micro"
 }
