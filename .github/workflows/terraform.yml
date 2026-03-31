@@ -6,7 +6,16 @@ on:
       - main
     paths:
       - 'go-web-app/Terraform/**'
-  workflow_dispatch:
+  workflow_dispatch:    
+    inputs:
+      action:
+        description: "Choose action"
+        required: true
+        default: "apply"
+        type: choice
+        options:
+          - apply
+          - destroy
 
 env:
   TF_WORKING_DIR: go-web-app/Terraform
@@ -21,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 🔐 Configure AWS (NO hardcoded creds)
       - name: Configure AWS Credentials
@@ -32,7 +41,7 @@ jobs:
 
       # 🏗 Setup Terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       # 🚀 Init
       - name: Terraform Init
@@ -49,8 +58,15 @@ jobs:
         run: terraform plan -input=false
         working-directory: ${{ env.TF_WORKING_DIR }}
 
-      # 🚀 Apply (only on main branch)
-      - name: Terraform Apply
+      # 🚀 Apply or Destroy (only on main branch)
+      - name: Terraform Apply/Destroy
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -input=false
+        run: |
+          if [ "${{ github.event.inputs.action }}" = "destroy" ]; then
+            echo "🔥 Running Terraform Destroy"
+            terraform destroy -auto-approve -input=false
+          else
+            echo "🚀 Running Terraform Apply"
+            terraform apply -auto-approve -input=false
+          fi
         working-directory: ${{ env.TF_WORKING_DIR }}
