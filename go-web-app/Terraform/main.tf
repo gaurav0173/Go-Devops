@@ -4,5 +4,5 @@ data "aws_ssm_parameter" "ami" {
 
 resource "aws_instance" "this" {
   ami           = data.aws_ssm_parameter.ami.value
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
 }
