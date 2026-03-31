@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'go-web-app/Terraform/**'
-  workflow_dispatch:
+  #workflow_dispatch:
 
 env:
   TF_WORKING_DIR: go-web-app/Terraform
@@ -32,7 +32,7 @@ jobs:
 
       # 🏗 Setup Terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       # 🚀 Init
       - name: Terraform Init
