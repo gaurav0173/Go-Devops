@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'Terraform/**'
+      - 'go-web-app/Terraform/**'
   workflow_dispatch:
 
 env:
-  TF_WORKING_DIR: Terraform
+  TF_WORKING_DIR: go-web-app/Terraform
 
 jobs:
   terraform:
