@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'go-web-app/Terraform/**'
-  #workflow_dispatch:
+#    paths:
+#      - 'go-web-app/Terraform/**'
+  workflow_dispatch:
 
 env:
   TF_WORKING_DIR: go-web-app/Terraform
